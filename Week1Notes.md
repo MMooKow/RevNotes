@@ -143,3 +143,86 @@ Absolue/Relative path names - Directories area arranged in a tree with / (root) 
 Pathnames can also be relative to your working directory. / is excluded from the beginning of relative pathnames. Ex: chem/notes  |  personal/res
 
 To print working directory `pwd`
+Listing directories - use command `ls dirname` ex `$ls /usr/local`
+Create directories - `mkdir dirname` ex: `$mkdir mydir`
+    Directories can be created in other directories using `$mkdir /tmp/test-dir`. This example creates test-dir in the /temp directory. You can also create multiple directories by adding more than one to the end of the command `$mkdir docs pub`.
+
+Creating parent directories - Sometimes when creating a directory it's parent directory(ies) might not exist. In those cases is -p with mkdir. `mkdir -p /tmp/amrood/test`.
+
+Removing directories - use `rmdir dirname` command. When removing a directory mkae sure its EMPTY. Can also remove multiple directories in one command using spaces.
+
+Change directories - use `cd dirname`. Can use absolute or relative directory paths
+    Ex: `$cd /usr/local/bin` from here you can move to the /usr/home/amrood directory using the relative path `$cd ../../home/amrood`.
+
+Renaming directories - `mv dirname newname` (move) command can be used to rename directoreis. Can also move a file to a new directory usin `mc filename dirpath`.
+
+The directories . and .. - . represents the current directory you are working in and .. represents a directory one level above the current working directory.
+
+FILE PERMISSION
+reference following section: <https://www.tutorialspoint.com/unix/unix-file-permission.htm>
+
+Every unix file has the following attributes:
+    1. Owner permissions - determines what actions the owner can perform.
+    2. Group permissions - determines what action the owner can perform.
+    3. Other (world) permissions - determines what actions all other users can perform on the file.
+The permissions indicator - While using the `ls -l` command various permission info is shown. 
+    $ls -l /home/amrood
+    -rwxr-xr--  1 amrood   users 1024  Nov 2 00:10  myfile
+    drwxr-xr--- 1 amrood   users 1024  Nov 2 00:10  mydir
+
+    Here, the first column represents different access modes, i.e., the permission associated with a file or a directory.
+
+The permissions are broken into groups of threes, and each position in the group denotes a specific permission, in this order: read (r), write (w), execute (x) −
+
+The first three characters (2-4) represent the permissions for the file's owner. For example, -rwxr-xr-- represents that the owner has read (r), write (w) and execute (x) permission.
+
+The second group of three characters (5-7) consists of the permissions for the group to which the file belongs. For example, -rwxr-xr-- represents that the group has read (r) and execute (x) permission, but no write permission.
+
+The last group of three characters (8-10) represents the permissions for everyone else. For example, -rwxr-xr-- represents that there is read (r) only permission.
+
+File access modes - access modes are important to security.
+    Read - ability to view the contents of a file.
+    Write - ability to modify the contents of a file
+    Execute - ability to run the file as a program
+
+Directory access modes - Listed and organized the same as for any other file, however there are several differences.
+    Read - Users can look at the contents and see the file names in a directory.
+    Write - Users can add or delete files from a directory
+    Execute - More like "traverse permission". A user needs execute access to the bin directory to execute the `ls` or `cd` commands.
+
+Changing permissions - Use the `chmod` (change mode) command. 2 ways to use: symbolic and absolute. See website for details.
+
+Changing owners and groups - When making an account on a Unix system it assigns an owner id and group id. 2 commans are available to change the owner and group of files.
+    `chown` - changes owner
+    `chgrp` - changed group
+Changing ownership - `$ chown user filelist` the value of user can either be name of a user or user id (uid). Ex: `$ chown amrood testfile` changes owner of given file to amrood. Note - the super user/root has unrestricted access to change permissions. Other users can only change file they created.
+
+Changing group ownership - `chgrp` is used to change group ownership. Ex: `$ chgrp special testfile`. changes group of the given file to special group.
+
+SUID and SGID file permission - Set group id and set user id allow a program to change a users permission just for that program such as to change their password and then changes it back.
+    The SUID and SGID bits will appear as the letter "s" if the permission is available. The SUID "s" bit will be located in the permission bits where the owners’ execute permission normally resides.
+
+    For example, the command −
+
+    `$ ls -l /usr/bin/passwd`
+    `-r-sr-xr-x  1   root   bin  19031 Feb 7 13:47  /usr/bin/passwd*`
+
+ENVIRONMENT
+reference following section: <https://www.tutorialspoint.com/unix/unix-environment.htm>
+
+An important concept in Unix is the environment, whish is defined b environment variables. These can be set by the system, shell, or any program and loads another program.
+A variable is a caracter string to which a value is assigned. The vale can by a number, text, filename, device, or any other type of data.
+Ex: first set variable TEST and then access it using the `echo` command.
+    `$TEST="Unix Programming"`
+    `$echo $TEST`
+
+The .profile File - Maintained by the system admin. Can be customized but contains a minimum of the type of terminal you are using, a list of dirctories in which to locate commands, and a list of variables affecting the look and feel of your terminal.
+
+Setting the terminal type - type of terminal is automatically configured by login or getty programs. Sometimes the autoconfig process guesses your terminal incorrectly. If your terminal is set incorrectly the output commands might look strange or you might not be able to interact with the shell properly. To avoid this most users set their terminal to the lowest setting using `TERM=vt100`
+
+Setting the path - When typing a command in the command prompt the shell has to locate the command before it can be executed. The PATH var specifies the locations in which the shell should look for commands. Ususally it is set as follows: `$PATH=/bin:/usr/bin`
+
+The PS1 and PS2 variables - The characters the shell displays as your command prompt are stored in the PS1 var. Changes can by made to this var to display differently. The changes are temporary unless you add PS1 to your .profile file. When you issue a command that is incomplete, the shell will display a seconday prompt and wait for you to complete the command and hit enter again. PS2 is the secondat prompt usual >. The PS2 var can be changed like the PS1 var using `$ PS2="secondary prompt->"`. A list of envornmental vars is available.
+
+BASIC UTILITES
+reference following section <https://www.tutorialspoint.com/unix/unix-basic-utilities.htm>
